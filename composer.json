@@ -1,0 +1,24 @@
+{
+    "name": "andrey-tech/database-php",
+    "description": "Простая расширяемая библиотека классов на PHP7+ и PDO для работы с СУБД (MySQL, SQLite и др.) с кэшированием подготовленных запросов",
+    "keywords": [ "database", "pdo", "mysql", "sqlite" ],
+    "homepage": "https://github.com/andrey-tech/database-php",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "andrey-tech",
+            "homepage": "https://github.com/andrey-tech/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App"
+        }
+    }
+}

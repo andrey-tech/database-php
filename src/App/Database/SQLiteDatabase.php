@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * Класс для работы с СУБД SQLite
+ *
+ * @author    andrey-tech
+ * @copyright 2019-2020 andrey-tech
+ * @see https://github.com/andrey-tech/database-php
+ * @license   MIT
+ *
+ * @version 1.0.0
+ *
+ * v1.0.0 (03.08.2020) Начальный релиз
+ *
+ */
+
+declare(strict_types=1);
+
+namespace App\Database;
+
+use PDO;
+use PDOException;
+
+class SQLiteDatabase extends Database
+{
+    /**
+     * Параметры соединения с СУБД SQLite
+     * @var array
+     */
+    protected $config = [
+        'driver'   => 'sqlite',
+        'database' => 'database.sqlite'
+    ];
+
+    /**
+     * Опции подключения для драйвера СУБД SQLite
+     * @var array
+     */
+    protected $options = [
+         PDO::ATTR_TIMEOUT            => 60,
+         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ];
+
+    /**
+     * Выполняет подключение к СУБД
+     * @return void
+     * @throws DatabaseException
+     */
+    public function connect()
+    {
+        $dsn = "{$this->config['driver']}:{$this->config['database']}";
+
+        $this->debug("***** CONNECT {$this->config['database']}");
+
+        try {
+            $this->pdo = new PDO($dsn, '', '', $this->options);
+        } catch (PDOException $e) {
+            throw new DatabaseException($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Выполняет отключение от БД
+     * @return void
+     */
+    public function disconnect()
+    {
+        $this->debug("***** DISCONNECT {$this->config['database']}");
+        $this->pdo = null;
+    }
+}
